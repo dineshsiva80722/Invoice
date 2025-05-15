@@ -22,7 +22,7 @@ import {
   IconPlus,
   IconClock,
   IconDotsVertical,
-  
+
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -84,6 +84,11 @@ export default function SidebarDemo() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
+
+
+
+
+
   const { user } = useUser();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -227,7 +232,17 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
   const { user } = useUser();
   const searchParams = useSearchParams();
   const name = searchParams.get('name') || user?.firstName || '';
-
+  // home dashborad
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [lastMonthRevenue, setLastMonthRevenue] = useState(0);
+  const [pendinginvoices, setpendinginvoices] = useState(0);
+  const [lastMonthPendingInvoices, setlastMonthPendingInvoices] = useState(0);
+  const [totalCustomers, setTotalCustomers] = useState(0);
+  const [lasMonthTotalCustomers, setlasMonthTotalCustomers] = useState(0);
+  const [Expense, setExpense] = useState(0);
+  const [LastMonthExpense, setLastMonthExpense] = useState(0);
+  const [totalInvoices, setTotalInvoices] = useState(0);
+  const [totalQuotes, setTotalQuotes] = useState(0);
   if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -291,76 +306,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                 </div>
               )}
             </div>
-            {/* <div className="relative group" ref={notificationRef}>
-              <div onClick={() => setIsNotificationOpen(!isNotificationOpen)} className="w-8 h-full rounded-sm flex items-center justify-center cursor-pointer hover:bg-neutral-700 transition-colors">
-                <IconBell className="h-4 w-4 shrink-0 text-white" />
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-400 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs">3</span>
-                </div>
-              </div>
-              {isNotificationOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-neutral-800 rounded-lg shadow-lg py-1 z-50 border border-gray-700">
-                  <div className="px-4 py-2 border-b border-gray-700">
-                    <p className="text-sm font-medium text-white">Notifications</p>
-                  </div>
 
-                  <div className="max-h-[300px] overflow-y-auto">
-                    <div className="px-4 py-3 hover:bg-neutral-700 cursor-pointer">
-                      <div className="flex items-start">
-                        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                          <IconFileInvoice className="w-4 h-4 text-blue-600" />
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-sm font-medium text-white">New Invoice Created</p>
-                          <p className="text-xs text-gray-400 mt-1">Invoice #1234 has been created by John Doe</p>
-                          <p className="text-xs text-gray-400 mt-1">2 min ago</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="px-4 py-3 hover:bg-neutral-700 cursor-pointer">
-                      <div className="flex items-start">
-                        <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                          <IconCreditCardPay className="w-4 h-4 text-green-600" />
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-sm font-medium text-white">Payment Received</p>
-                          <p className="text-xs text-gray-400 mt-1">$1,200 received from Client XYZ</p>
-                          <p className="text-xs text-gray-400 mt-1">1 hour ago</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="px-4 py-3 hover:bg-neutral-700 cursor-pointer">
-                      <div className="flex items-start">
-                        <div className="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
-                          <IconClock className="w-4 h-4 text-yellow-600" />
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-sm font-medium text-white">Payment Reminder</p>
-                          <p className="text-xs text-gray-400 mt-1">Invoice #789 is due in 2 days</p>
-                          <p className="text-xs text-gray-400 mt-1">5 hours ago</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-gray-700 mt-1">
-                    <a href="#" className="block px-4 py-2 text-sm text-blue-400 hover:bg-neutral-700 text-center font-medium">
-                      View All Notifications
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div> */}
-            {/* <div className="relative group">
-              <div className="w-8 h-full rounded-sm flex items-center justify-center cursor-pointer hover:bg-neutral-700 transition-colors">
-                <IconSettings className="h-4 w-4 shrink-0 text-white" />
-              </div>
-              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-neutral-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
-                Settings
-              </div>
-            </div> */}
           </div>
         </div>
         <div className="flex-1 p-1 overflow-auto">
@@ -384,7 +330,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-sm font-medium text-white">Total Revenue</h3>
-                      <p className="text-2xl font-bold text-gray-100">$24,560.00</p>
+                      <p className="text-2xl font-bold text-gray-100">{totalRevenue}</p>
                     </div>
                     <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
                       <IconReportMoney className="h-6 w-6 text-green-600" />
@@ -395,7 +341,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                       </svg>
-                      12.5%
+                      {lastMonthRevenue}%
                     </span>
                     <span className="text-gray-100 ml-2">from last month</span>
                   </div>
@@ -405,7 +351,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-sm font-medium text-white">Pending Invoices</h3>
-                      <p className="text-2xl font-bold text-gray-100">12</p>
+                      <p className="text-2xl font-bold text-gray-100">{pendinginvoices}</p>
                     </div>
                     <div className="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center">
                       <IconFileInvoice className="h-6 w-6 text-yellow-600" />
@@ -416,7 +362,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                       </svg>
-                      4.2%
+                      {lastMonthPendingInvoices}
                     </span>
                     <span className="text-gray-100 ml-2">from last month</span>
                   </div>
@@ -426,7 +372,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-sm font-medium text-white">Total Customers</h3>
-                      <p className="text-2xl font-bold text-gray-100">64</p>
+                      <p className="text-2xl font-bold text-gray-100">{totalCustomers}</p>
                     </div>
                     <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                       <IconUserBolt className="h-6 w-6 text-blue-600" />
@@ -437,7 +383,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                       </svg>
-                      8.1%
+                      {lasMonthTotalCustomers}
                     </span>
                     <span className="text-gray-100 ml-2">from last month</span>
                   </div>
@@ -447,7 +393,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-sm font-medium text-white">Total Expenses</h3>
-                      <p className="text-2xl font-bold text-gray-100">$8,120.00</p>
+                      <p className="text-2xl font-bold text-gray-100">{Expense}</p>
                     </div>
                     <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
                       <IconCreditCardPay className="h-6 w-6 text-red-600" />
@@ -458,7 +404,7 @@ const Dashboard = ({ activeTab }: DashboardProps) => {
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                       </svg>
-                      2.5%
+                      {LastMonthExpense}
                     </span>
                     <span className="text-gray-100 ml-2">from last month</span>
                   </div>

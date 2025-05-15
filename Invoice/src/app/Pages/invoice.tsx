@@ -2,7 +2,7 @@
 import React from 'react'
 import InvoiceForm from '@/app/Pages/components/InvoiceFrom'
 import InvoicePreview from '@/app/Pages/components/InvoicePreview'
-import Header from '@/app/Pages/components/header'
+import Header from '@/app/Pages/components/Header'
 import { InvoiceProvider } from '@/app/Pages/context/InvoiceContext'
 
 const  invoice = () => {
